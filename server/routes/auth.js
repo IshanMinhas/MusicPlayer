@@ -50,7 +50,7 @@ router.get("/getUsers", async (req, res) => {
     // projection : {}
   };
 
-  const cursor = await user.find(options);
+  const cursor = await user.find().sort(options.sort);
   if (cursor) {
     res.status(200).send({ success: true, data: cursor });
   } else {
@@ -61,7 +61,7 @@ router.get("/getUsers", async (req, res) => {
 router.get("/getUser/:userId", async (req, res) => {
   const filter = { _id: req.params.userId };
 
-  const userExists = await user.findOne({ _id: filter });
+  const userExists = await user.findOne(filter);
   if (!userExists)
     return res.status(400).send({ success: false, msg: "Invalid User ID" });
   if (userExists.favourites) {

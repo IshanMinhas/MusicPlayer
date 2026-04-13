@@ -40,7 +40,7 @@ const MusicPlayer = () => {
   };
 
   const nextTrack = () => {
-    if (song > allSongs.length) {
+    if (song >= allSongs.length - 1) {
       dispatch({
         type: actionType.SET_SONG,
         song: 0,
@@ -68,7 +68,7 @@ const MusicPlayer = () => {
   };
 
   useEffect(() => {
-    if (song > allSongs.length) {
+    if (song >= allSongs.length) {
       dispatch({
         type: actionType.SET_SONG,
         song: 0,
@@ -194,7 +194,7 @@ export const PlayListCard = () => {
             animate={{ opacity: 1, translateX: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
             className={`group w-full p-4 hover:bg-card flex gap-3 items-center cursor-pointer ${
-              music?._id === song._id ? "bg-card" : "bg-transparent"
+              index === song ? "bg-card" : "bg-transparent"
             }`}
             onClick={() => setCurrentPlaySong(index)}
           >

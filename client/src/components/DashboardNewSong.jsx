@@ -141,7 +141,7 @@ export const DisabledButton = () => {
 const DashboardNewSong = () => {
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [songImageUrl, setSongImageUrl] = useState(null);
-  const [setAlert, setSetAlert] = useState(null);
+  const [alert, setAlert] = useState(null);
   const [alertMsg, setAlertMsg] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
 
@@ -173,7 +173,7 @@ const DashboardNewSong = () => {
 
     if (!allAlbums) {
       getAllAlbums().then((data) => {
-        dispatch({ type: actionType.SET_ALL_ALBUMNS, allAlbums: data.data });
+        dispatch({ type: actionType.SET_ALL_ALBUMS, allAlbums: data.data });
       });
     }
   }, []);
@@ -196,10 +196,10 @@ const DashboardNewSong = () => {
     }
     const deleteRef = ref(storage, songURL);
     deleteObject(deleteRef).then(() => {
-      setSetAlert("success");
+      setAlert("success");
       setAlertMsg("File removed successfully");
       setTimeout(() => {
-        setSetAlert(null);
+        setAlert(null);
       }, 4000);
       setIsImageLoading(false);
       setIsAudioLoading(false);
@@ -208,10 +208,10 @@ const DashboardNewSong = () => {
 
   const saveSong = () => {
     if (!songImageUrl || !audioAsset || !songName) {
-      setSetAlert("error");
+      setAlert("error");
       setAlertMsg("Required fields are missing");
       setTimeout(() => {
-        setSetAlert(null);
+        setAlert(null);
       }, 4000);
     } else {
       setIsImageLoading(true);
@@ -231,10 +231,10 @@ const DashboardNewSong = () => {
           dispatch({ type: actionType.SET_ALL_SONGS, allSongs: songs.data });
         });
       });
-      setSetAlert("success");
+      setAlert("success");
       setAlertMsg("Data saved successfully");
       setTimeout(() => {
-        setSetAlert(null);
+        setAlert(null);
       }, 4000);
       setIsImageLoading(false);
       setIsAudioLoading(false);
@@ -276,7 +276,7 @@ const DashboardNewSong = () => {
                   {!songImageUrl ? (
                     <ImageUploader
                       setImageURL={setSongImageUrl}
-                      setAlert={setSetAlert}
+                      setAlert={setAlert}
                       alertMsg={setAlertMsg}
                       isLoading={setIsImageLoading}
                       setProgress={setUploadProgress}
@@ -311,7 +311,7 @@ const DashboardNewSong = () => {
                   {!audioAsset ? (
                     <ImageUploader
                       setImageURL={setAudioAsset}
-                      setAlert={setSetAlert}
+                      setAlert={setAlert}
                       alertMsg={setAlertMsg}
                       isLoading={setIsAudioLoading}
                       setProgress={setUploadProgress}
@@ -355,9 +355,9 @@ const DashboardNewSong = () => {
           <AddNewAlbum />
         </div>
       </div>
-      {setAlert && (
+      {alert && (
         <>
-          {setAlert === "success" ? (
+          {alert === "success" ? (
             <AlertSuccess msg={alertMsg} />
           ) : (
             <AlertError msg={alertMsg} />
@@ -566,8 +566,8 @@ export const AddNewAlbum = () => {
       saveNewAlbum(data).then((res) => {
         getAllAlbums().then((albumData) => {
           dispatch({
-            type: actionType.SET_ALL_ALBUMNS,
-            albumData: albumData.data,
+            type: actionType.SET_ALL_ALBUMS,
+            allAlbums: albumData.data,
           });
         });
       });

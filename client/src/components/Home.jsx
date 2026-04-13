@@ -40,10 +40,9 @@ const Home = () => {
     if (searchTerm.length > 0) {
       const filtered = allSongs.filter(
         (data) =>
-          data.artist.toLowerCase().includes(searchTerm) ||
-          data.language.toLowerCase().includes(searchTerm) ||
-          data.name.toLowerCase().includes(searchTerm) ||
-          data.artist.includes(artistFilter)
+          data.artist.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          data.language.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          data.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredSongs(filtered);
     } else {
